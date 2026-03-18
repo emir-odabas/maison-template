@@ -1,278 +1,259 @@
 <!DOCTYPE html>
 <html lang="tr">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Arama motorları admin paneli indexlemesin -->
   <meta name="robots" content="noindex, nofollow">
-
-  <!-- Content Security Policy -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self';
-             script-src 'self' 'unsafe-inline' https://www.gstatic.com;
-             style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com;
-             font-src https://fonts.gstatic.com;
-             img-src 'self' data: blob: https://firebasestorage.googleapis.com;
-             connect-src 'self' https://*.firebaseio.com https://*.googleapis.com https://firestore.googleapis.com https://firebasestorage.googleapis.com;
-             frame-ancestors 'none';">
-
-  <!-- Clickjacking koruması -->
   <meta http-equiv="X-Frame-Options" content="DENY">
-
   <title>Admin Panel</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/admin.css">
 </head>
-
 <body>
-  <div id="loading-screen">Yükleniyor...</div>
-  <!-- LOGIN -->
-  <div id="login-screen" role="main">
-    <div class="login-box">
-      <p class="login-logo" id="login-site-name">Maison</p>
-      <p class="login-sub">Admin Paneli</p>
-      <div class="field">
-        <label for="login-email">E-posta</label>
-        <input type="email" id="login-email" placeholder="admin@maison.com" autocomplete="username"
-          onkeydown="if(event.key==='Enter')girisYap()">
-      </div>
-      <div class="field">
-        <label for="login-pass">Şifre</label>
-        <input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password"
-          onkeydown="if(event.key==='Enter')girisYap()">
-      </div>
-      <p class="login-error" id="login-error" role="alert"></p>
-      <button type="button" class="btn" id="login-btn" onclick="girisYap()">Giriş Yap</button>
+
+<!-- LOADING -->
+<div id="loading-screen" style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--off-white);font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--warm-gray);">
+  Yükleniyor...
+</div>
+
+<!-- LOGIN -->
+<div id="login-screen" style="display:none;" role="main">
+  <div class="login-box">
+    <p class="login-logo" id="login-site-name">Maison</p>
+    <p class="login-sub">Admin Paneli</p>
+    <div class="field">
+      <label for="login-email">E-posta</label>
+      <input type="email" id="login-email" placeholder="admin@maison.com" autocomplete="username" onkeydown="if(event.key==='Enter')girisYap()">
     </div>
+    <div class="field">
+      <label for="login-pass">Şifre</label>
+      <input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')girisYap()">
+    </div>
+    <p class="login-error" id="login-error" role="alert"></p>
+    <button type="button" class="btn" id="login-btn" onclick="girisYap()">Giriş Yap</button>
   </div>
+</div>
 
-  <!-- APP -->
-  <div id="app" role="application">
+<!-- APP -->
+<div id="app" style="display:none;">
 
-    <aside class="sidebar" role="navigation" aria-label="Admin menü">
-      <p class="sidebar-logo" id="sidebar-site-name">Maison</p>
-      <p class="sidebar-sub">Admin Panel</p>
-      <ul class="sidebar-nav">
-        <li><a href="#" class="active" onclick="sayfaAc('dashboard',this)">
-            <span class="nav-icon" aria-hidden="true">▦</span> Genel Bakış</a></li>
-        <li><a href="#" onclick="sayfaAc('urunler',this)">
-            <span class="nav-icon" aria-hidden="true">◈</span> Ürünler</a></li>
-        <li><a href="#" onclick="sayfaAc('urun-ekle-sayfa',this)">
-            <span class="nav-icon" aria-hidden="true">+</span> Ürün Ekle</a></li>
-        <li><a href="index.html" target="_blank" rel="noopener">
-            <span class="nav-icon" aria-hidden="true">↗</span> Siteyi Gör</a></li>
-      </ul>
-      <div class="sidebar-user">
-        <p class="sidebar-user-email" id="user-email"></p>
-        <a href="#" onclick="cikisYap()">Çıkış Yap</a>
-      </div>
-    </aside>
+  <aside class="sidebar">
+    <p class="sidebar-logo" id="sidebar-site-name">Maison</p>
+    <p class="sidebar-sub">Admin Panel</p>
+    <ul class="sidebar-nav">
+      <li><a href="#" class="active" onclick="sayfaAc('dashboard',this)"><span class="nav-icon">▦</span> Genel Bakış</a></li>
+      <li><a href="#" onclick="sayfaAc('urunler',this)"><span class="nav-icon">◈</span> Ürünler</a></li>
+      <li><a href="#" onclick="sayfaAc('urun-ekle-sayfa',this)"><span class="nav-icon">+</span> Ürün Ekle</a></li>
+      <li><a href="#" onclick="sayfaAc('siparisler',this)"><span class="nav-icon">◎</span> Siparişler</a></li>
+      <li><a href="#" onclick="sayfaAc('siparis-ekle',this)"><span class="nav-icon">+</span> Sipariş Ekle</a></li>
+      <li><a href="index.html" target="_blank" rel="noopener"><span class="nav-icon">↗</span> Siteyi Gör</a></li>
+    </ul>
+    <div class="sidebar-user">
+      <p class="sidebar-user-email" id="user-email"></p>
+      <a href="#" onclick="cikisYap()">Çıkış Yap</a>
+    </div>
+  </aside>
 
-    <main class="main">
+  <main class="main">
 
-      <!-- DASHBOARD -->
-      <div class="page active" id="page-dashboard">
-        <div class="page-header">
-          <div>
-            <h1 class="page-title">Genel Bakış</h1>
-            <p class="page-sub">Hoş geldin 👋</p>
-          </div>
-        </div>
-        <div class="stats-grid" role="list" aria-label="İstatistikler">
-          <div class="stat-card" role="listitem">
-            <p class="stat-label">Toplam Ürün</p>
-            <p class="stat-value" id="stat-toplam">—</p>
-          </div>
-          <div class="stat-card" role="listitem">
-            <p class="stat-label">Kadın</p>
-            <p class="stat-value" id="stat-kadin">—</p>
-          </div>
-          <div class="stat-card" role="listitem">
-            <p class="stat-label">Erkek</p>
-            <p class="stat-value" id="stat-erkek">—</p>
-          </div>
-          <div class="stat-card" role="listitem">
-            <p class="stat-label">İndirimli</p>
-            <p class="stat-value" id="stat-indirim">—</p>
-          </div>
-        </div>
-        <div class="table-wrap">
-          <div class="table-toolbar">
-            <p style="font-size:12px;color:var(--warm-gray)">Son eklenen ürünler</p>
-            <button type="button" class="btn btn-sm"
-              onclick="sayfaAc('urun-ekle-sayfa',document.querySelector('[onclick*=urun-ekle-sayfa]'))">+ Ürün
-              Ekle</button>
-          </div>
-          <table role="table" aria-label="Son ürünler">
-            <thead>
-              <tr>
-                <th>Görsel</th>
-                <th>Ürün Adı</th>
-                <th>Cinsiyet</th>
-                <th>Fiyat</th>
-                <th>İşlem</th>
-              </tr>
-            </thead>
-            <tbody id="son-urunler-tbody">
-              <tr>
-                <td colspan="5" class="empty-state">Yükleniyor...</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+    <!-- DASHBOARD -->
+    <div class="page active" id="page-dashboard">
+      <div class="page-header">
+        <div><h1 class="page-title">Genel Bakış</h1><p class="page-sub">Hoş geldin 👋</p></div>
       </div>
 
-      <!-- ÜRÜNLER LİSTESİ -->
-      <div class="page" id="page-urunler">
-        <div class="page-header">
-          <div>
-            <h1 class="page-title">Ürünler</h1>
-            <p class="page-sub" id="urun-sayisi-text">Tüm ürünler</p>
-          </div>
-          <button type="button" class="btn btn-sm"
-            onclick="sayfaAc('urun-ekle-sayfa',document.querySelector('[onclick*=urun-ekle-sayfa]'))">+ Ürün
-            Ekle</button>
-        </div>
-        <div class="table-wrap">
-          <div class="table-toolbar">
-            <input class="search-input" type="search" placeholder="Ürün ara..." aria-label="Ürün arama"
-              oninput="urunAra(this.value)">
-            <div style="display:flex;gap:8px;" role="group" aria-label="Filtrele">
-              <button type="button" class="btn btn-outline btn-sm" onclick="filtrele('hepsi')">Tümü</button>
-              <button type="button" class="btn btn-outline btn-sm" onclick="filtrele('kadin')">Kadın</button>
-              <button type="button" class="btn btn-outline btn-sm" onclick="filtrele('erkek')">Erkek</button>
-            </div>
-          </div>
-          <table role="table" aria-label="Ürün listesi">
-            <thead>
-              <tr>
-                <th>Görsel</th>
-                <th>Ürün Adı</th>
-                <th>Kategori</th>
-                <th>Cinsiyet</th>
-                <th>Fiyat</th>
-                <th>Durum</th>
-                <th>İşlemler</th>
-              </tr>
-            </thead>
-            <tbody id="urunler-tbody">
-              <tr>
-                <td colspan="7" class="empty-state">Yükleniyor...</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+      <p style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--warm-gray);margin-bottom:10px;">Ürünler</p>
+      <div class="stats-grid" style="margin-bottom:20px;">
+        <div class="stat-card"><p class="stat-label">Toplam Ürün</p><p class="stat-value" id="stat-toplam">—</p></div>
+        <div class="stat-card"><p class="stat-label">Kadın</p><p class="stat-value" id="stat-kadin">—</p></div>
+        <div class="stat-card"><p class="stat-label">Erkek</p><p class="stat-value" id="stat-erkek">—</p></div>
+        <div class="stat-card"><p class="stat-label">İndirimli</p><p class="stat-value" id="stat-indirim">—</p></div>
       </div>
 
-      <!-- ÜRÜN EKLE / DÜZENLE -->
-      <div class="page" id="page-urun-ekle-sayfa">
-        <div class="page-header">
-          <div>
-            <h1 class="page-title" id="form-sayfa-baslik">Yeni Ürün Ekle</h1>
-            <p class="page-sub">Tüm alanları doldur</p>
-          </div>
-          <button type="button" class="btn btn-outline btn-sm"
-            onclick="sayfaAc('urunler',document.querySelector('[onclick*=urunler]'))">← Listeye Dön</button>
+      <p style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--warm-gray);margin-bottom:10px;">Siparişler & Ciro</p>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:32px;">
+        <div class="stat-card"><p class="stat-label">Toplam Sipariş</p><p class="stat-value" id="stat-siparis">—</p></div>
+        <div class="stat-card"><p class="stat-label">Teslim Edildi</p><p class="stat-value" style="color:#3A7D5C" id="stat-teslim">—</p></div>
+        <div class="stat-card"><p class="stat-label">Beklemede</p><p class="stat-value" style="color:#BA7517" id="stat-bekleyen">—</p></div>
+        <div class="stat-card"><p class="stat-label">İptal</p><p class="stat-value" style="color:#9B3A3A" id="stat-iptal">—</p></div>
+        <div class="stat-card"><p class="stat-label">Bu Ay Ciro</p><p class="stat-value" style="color:#3A7D5C;font-size:18px" id="stat-buay">—</p></div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;">
+        <div class="stat-card" style="background:var(--black);">
+          <p class="stat-label" style="color:rgba(255,255,255,0.4)">Toplam Ciro</p>
+          <p class="stat-value" style="color:var(--accent);font-size:22px" id="stat-ciro">—</p>
+          <p style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:4px;">Teslim edilen siparişler</p>
         </div>
-
-        <div style="background:var(--white);border:0.5px solid var(--cream);padding:32px;max-width:680px;">
-          <input type="hidden" id="form-urun-id">
-
-          <!-- Görsel -->
-          <div class="field">
-            <label>Ürün Görseli</label>
-            <div class="upload-zone" role="button" aria-label="Görsel yükle">
-              <input type="file" accept="image/jpeg,image/png,image/webp" aria-label="Görsel dosyası seç"
-                onchange="gorselOnizle(this)">
-              <p class="upload-zone-text">Tıkla veya sürükle<br>
-                <span style="font-size:11px;opacity:0.6">JPG, PNG, WebP — max 5MB</span>
-              </p>
-              <img id="upload-preview" class="upload-preview" alt="Seçilen görsel önizleme">
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="field">
-              <label for="form-ad">Ürün Adı *</label>
-              <input type="text" id="form-ad" placeholder="Oversize Keten Ceket" maxlength="200" autocomplete="off">
-            </div>
-            <div class="field">
-              <label for="form-alt-kategori">Alt Kategori</label>
-              <input type="text" id="form-alt-kategori" placeholder="Dış Giyim" maxlength="100" autocomplete="off">
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="field">
-              <label for="form-cinsiyet">Cinsiyet *</label>
-              <select id="form-cinsiyet">
-                <option value="">Seç...</option>
-                <option value="kadin">Kadın</option>
-                <option value="erkek">Erkek</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="form-durum">Durum</label>
-              <select id="form-durum">
-                <option value="aktif">Aktif (Sitede Görünür)</option>
-                <option value="pasif">Pasif (Gizli)</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="field">
-              <label for="form-fiyat">Fiyat (₺) *</label>
-              <input type="number" id="form-fiyat" placeholder="3290" min="0" max="999999" step="1" autocomplete="off">
-            </div>
-            <div class="field">
-              <label for="form-indirim-fiyat">İndirimli Fiyat (₺)</label>
-              <input type="number" id="form-indirim-fiyat" placeholder="Boş bırakabilirsin" min="0" max="999999"
-                step="1" autocomplete="off">
-            </div>
-          </div>
-
-          <div class="field">
-            <label for="form-aciklama">Açıklama</label>
-            <textarea id="form-aciklama" placeholder="Ürün hakkında kısa açıklama..." maxlength="1000"></textarea>
-          </div>
-
-          <!-- Renk Seçici -->
-          <div class="field">
-            <label>Renk Seçenekleri <span style="font-size:10px;color:var(--warm-gray)">(max 10)</span></label>
-            <div class="renkler-list" id="renkler-list" role="list" aria-label="Seçilen renkler"></div>
-            <div class="renk-ekle">
-              <input type="color" id="renk-picker" value="#1C1B19" aria-label="Renk seç">
-              <button type="button" class="btn btn-outline btn-sm" onclick="renkEkle()">+ Renk Ekle</button>
-            </div>
-          </div>
-
-          <div style="display:flex;gap:10px;margin-top:8px;">
-            <button type="button" class="btn btn-green" onclick="urunKaydet()" style="flex:1">Kaydet</button>
-            <button type="button" class="btn btn-outline" onclick="formuTemizle()"
-              style="width:auto;padding:14px 24px;">Temizle</button>
+        <div class="stat-card" style="border:1px solid var(--cream);">
+          <p class="stat-label">Hızlı İşlem</p>
+          <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+            <button class="btn btn-sm btn-green" onclick="sayfaAc('siparis-ekle',document.querySelector('[onclick*=siparis-ekle]'))">+ Sipariş Ekle</button>
+            <button class="btn btn-sm btn-outline" onclick="sayfaAc('urun-ekle-sayfa',document.querySelector('[onclick*=urun-ekle-sayfa]'))">+ Ürün Ekle</button>
           </div>
         </div>
       </div>
 
-    </main>
-  </div>
+      <div class="table-wrap">
+        <div class="table-toolbar">
+          <p style="font-size:12px;color:var(--warm-gray)">Son siparişler</p>
+          <button class="btn btn-sm" onclick="sayfaAc('siparisler',document.querySelector('[onclick*=siparisler]'))">Tümünü Gör</button>
+        </div>
+        <table>
+          <thead><tr><th>Sipariş No</th><th>Müşteri</th><th>Ürün</th><th>Durum</th><th>Tutar</th></tr></thead>
+          <tbody id="son-siparisler-tbody"><tr><td colspan="5" class="empty-state">Yükleniyor...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
 
-  <div id="toast" role="status" aria-live="polite"></div>
+    <!-- ÜRÜNLER -->
+    <div class="page" id="page-urunler">
+      <div class="page-header">
+        <div><h1 class="page-title">Ürünler</h1><p class="page-sub" id="urun-sayisi-text">Tüm ürünler</p></div>
+        <button class="btn btn-sm" onclick="sayfaAc('urun-ekle-sayfa',document.querySelector('[onclick*=urun-ekle-sayfa]'))">+ Ürün Ekle</button>
+      </div>
+      <div class="table-wrap">
+        <div class="table-toolbar">
+          <input class="search-input" type="search" placeholder="Ürün ara..." oninput="urunAra(this.value)">
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-outline btn-sm" onclick="filtrele('hepsi')">Tümü</button>
+            <button class="btn btn-outline btn-sm" onclick="filtrele('kadin')">Kadın</button>
+            <button class="btn btn-outline btn-sm" onclick="filtrele('erkek')">Erkek</button>
+          </div>
+        </div>
+        <table>
+          <thead><tr><th>Görsel</th><th>Ürün Adı</th><th>Kategori</th><th>Cinsiyet</th><th>Fiyat</th><th>Durum</th><th>İşlemler</th></tr></thead>
+          <tbody id="urunler-tbody"><tr><td colspan="7" class="empty-state">Yükleniyor...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
 
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <!-- ÜRÜN EKLE/DÜZENLE -->
+    <div class="page" id="page-urun-ekle-sayfa">
+      <div class="page-header">
+        <div><h1 class="page-title" id="form-sayfa-baslik">Yeni Ürün Ekle</h1><p class="page-sub">Tüm alanları doldur</p></div>
+        <button class="btn btn-outline btn-sm" onclick="sayfaAc('urunler',document.querySelector('[onclick*=urunler]'))">← Listeye Dön</button>
+      </div>
+      <div style="background:var(--white);border:0.5px solid var(--cream);padding:32px;max-width:680px;">
+        <input type="hidden" id="form-urun-id">
+        <div class="field">
+          <label>Ürün Görseli</label>
+          <div class="upload-zone">
+            <input type="file" accept="image/jpeg,image/png,image/webp" onchange="gorselOnizle(this)">
+            <p class="upload-zone-text">Tıkla veya sürükle<br><span style="font-size:11px;opacity:0.6">JPG, PNG, WebP — max 5MB</span></p>
+            <img id="upload-preview" class="upload-preview" alt="Önizleme">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field"><label>Ürün Adı *</label><input type="text" id="form-ad" placeholder="Oversize Keten Ceket" maxlength="200"></div>
+          <div class="field"><label>Alt Kategori</label><input type="text" id="form-alt-kategori" placeholder="Dış Giyim" maxlength="100"></div>
+        </div>
+        <div class="form-row">
+          <div class="field"><label>Cinsiyet *</label>
+            <select id="form-cinsiyet"><option value="">Seç...</option><option value="kadin">Kadın</option><option value="erkek">Erkek</option></select>
+          </div>
+          <div class="field"><label>Durum</label>
+            <select id="form-durum"><option value="aktif">Aktif (Sitede Görünür)</option><option value="pasif">Pasif (Gizli)</option></select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field"><label>Fiyat (₺) *</label><input type="number" id="form-fiyat" placeholder="3290" min="0" max="999999"></div>
+          <div class="field"><label>İndirimli Fiyat (₺)</label><input type="number" id="form-indirim-fiyat" placeholder="Boş bırakabilirsin" min="0" max="999999"></div>
+        </div>
+        <div class="field"><label>Açıklama</label><textarea id="form-aciklama" placeholder="Ürün hakkında kısa açıklama..." maxlength="1000"></textarea></div>
+        <div class="field">
+          <label>Renk Seçenekleri <span style="font-size:10px;color:var(--warm-gray)">(max 10)</span></label>
+          <div class="renkler-list" id="renkler-list"></div>
+          <div class="renk-ekle">
+            <input type="color" id="renk-picker" value="#1C1B19">
+            <button type="button" class="btn btn-outline btn-sm" onclick="renkEkle()">+ Renk Ekle</button>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:8px;">
+          <button type="button" class="btn btn-green" onclick="urunKaydet()" style="flex:1">Kaydet</button>
+          <button type="button" class="btn btn-outline" onclick="formuTemizle()" style="width:auto;padding:14px 24px;">Temizle</button>
+        </div>
+      </div>
+    </div>
 
-  <!-- App scripts — sıra önemli -->
-  <script src="js/config.js"></script>
-  <script src="js/sanitize.js"></script>
-  <script src="js/admin.js"></script>
+    <!-- SİPARİŞLER LİSTESİ -->
+    <div class="page" id="page-siparisler">
+      <div class="page-header">
+        <div><h1 class="page-title">Siparişler</h1><p class="page-sub">Tüm sipariş kayıtları</p></div>
+        <button class="btn btn-sm btn-green" onclick="sayfaAc('siparis-ekle',document.querySelector('[onclick*=siparis-ekle]'))">+ Sipariş Ekle</button>
+      </div>
+      <div class="table-wrap">
+        <div class="table-toolbar">
+          <p style="font-size:12px;color:var(--warm-gray)">Filtrele</p>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-outline btn-sm" onclick="siparisleriYukleVeFiltrele('hepsi')">Tümü</button>
+            <button class="btn btn-outline btn-sm" onclick="siparisleriYukleVeFiltrele('beklemede')">Beklemede</button>
+            <button class="btn btn-outline btn-sm" onclick="siparisleriYukleVeFiltrele('teslim edildi')">Teslim Edildi</button>
+            <button class="btn btn-outline btn-sm" onclick="siparisleriYukleVeFiltrele('iptal')">İptal</button>
+          </div>
+        </div>
+        <table>
+          <thead><tr><th>Sipariş No</th><th>Müşteri</th><th>Ürün</th><th>Adet</th><th>Tutar</th><th>Durum</th><th>İşlemler</th></tr></thead>
+          <tbody id="siparisler-tbody"><tr><td colspan="7" class="empty-state">Yükleniyor...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
 
+    <!-- SİPARİŞ EKLE/DÜZENLE -->
+    <div class="page" id="page-siparis-ekle">
+      <div class="page-header">
+        <div><h1 class="page-title" id="siparis-form-baslik">Yeni Sipariş</h1><p class="page-sub">Sipariş bilgilerini gir</p></div>
+        <button class="btn btn-outline btn-sm" onclick="sayfaAc('siparisler',document.querySelector('[onclick*=siparisler]'))">← Listeye Dön</button>
+      </div>
+      <div style="background:var(--white);border:0.5px solid var(--cream);padding:32px;max-width:580px;">
+        <input type="hidden" id="sp-id">
+        <div class="form-row">
+          <div class="field"><label>Müşteri Adı *</label><input type="text" id="sp-musteri" placeholder="Ayşe Kaya" maxlength="100"></div>
+          <div class="field"><label>Ürün Adı *</label><input type="text" id="sp-urun" placeholder="Oversize Keten Ceket" maxlength="200"></div>
+        </div>
+        <div class="form-row">
+          <div class="field"><label>Adet</label><input type="number" id="sp-adet" value="1" min="1" max="999"></div>
+          <div class="field"><label>Tutar (₺) *</label><input type="number" id="sp-tutar" placeholder="3290" min="0"></div>
+        </div>
+        <div class="field"><label>Durum</label>
+          <select id="sp-durum">
+            <option value="beklemede">Beklemede</option>
+            <option value="teslim edildi">Teslim Edildi</option>
+            <option value="iptal">İptal</option>
+          </select>
+        </div>
+        <div class="field"><label>Not</label><textarea id="sp-not" placeholder="Kargo numarası, müşteri notu..." maxlength="500"></textarea></div>
+        <div style="display:flex;gap:10px;margin-top:8px;">
+          <button type="button" class="btn btn-green" onclick="siparisKaydet()" style="flex:1">Kaydet</button>
+          <button type="button" class="btn btn-outline" onclick="siparisFormuTemizle()" style="width:auto;padding:14px 24px;">Temizle</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="js/config.js"></script>
+<script src="js/sanitize.js"></script>
+<script>
+  // Filtre wrapper — global scope
+  function siparisleriYukleVeFiltrele(durum) {
+    const tbody = document.getElementById('siparisler-tbody');
+    if (!tbody || typeof tumSiparisler === 'undefined') return;
+    const filtreli = durum === 'hepsi' ? window._tumSiparisler : window._tumSiparisler.filter(s => s.durum === durum);
+    tbody.innerHTML = '';
+    if (!filtreli.length) {
+      const tr=document.createElement('tr'); const td=document.createElement('td'); td.colSpan=7; td.className='empty-state'; td.textContent='Sonuç yok.'; tr.appendChild(td); tbody.appendChild(tr); return;
+    }
+  }
+</script>
+<script src="js/admin.js"></script>
 </body>
-
 </html>

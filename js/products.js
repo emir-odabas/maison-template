@@ -68,8 +68,8 @@
 
     const renkleriHTML = u.renkler.length
       ? `<div class="product-color-swatch">${u.renkler.map(r =>
-        `<div class="swatch" style="background:${r}" aria-label="${r}"></div>`
-      ).join('')}</div>`
+          `<div class="swatch" style="background:${r}" aria-label="${r}"></div>`
+        ).join('')}</div>`
       : '';
 
     return `

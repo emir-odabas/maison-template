@@ -12,11 +12,11 @@ const Sanitize = (() => {
   function escapeHtml(str) {
     if (str === null || str === undefined) return '';
     return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
+      .replace(/&/g,  '&amp;')
+      .replace(/</g,  '&lt;')
+      .replace(/>/g,  '&gt;')
+      .replace(/"/g,  '&quot;')
+      .replace(/'/g,  '&#039;');
   }
 
   // Sayı olduğunu doğrula, değilse 0 döndür
@@ -45,16 +45,16 @@ const Sanitize = (() => {
   // Firestore'dan gelen ürün nesnesini temizle
   function sanitizeProduct(raw) {
     return {
-      id: escapeHtml(raw.id || ''),
-      ad: escapeHtml(raw.ad || ''),
-      altKategori: escapeHtml(raw.altKategori || ''),
+      id:               escapeHtml(raw.id || ''),
+      ad:               escapeHtml(raw.ad || ''),
+      altKategori:      escapeHtml(raw.altKategori || ''),
       kategoriCinsiyet: ['kadin', 'erkek'].includes(raw.kategoriCinsiyet) ? raw.kategoriCinsiyet : 'kadin',
-      durum: ['aktif', 'pasif'].includes(raw.durum) ? raw.durum : 'aktif',
-      fiyat: safeNumber(raw.fiyat),
-      indirimFiyat: raw.indirimFiyat ? safeNumber(raw.indirimFiyat) : null,
-      aciklama: escapeHtml(raw.aciklama || ''),
-      gorselURL: safeUrl(raw.gorselURL || ''),
-      renkler: Array.isArray(raw.renkler) ? raw.renkler.map(safeColor) : [],
+      durum:            ['aktif', 'pasif'].includes(raw.durum) ? raw.durum : 'aktif',
+      fiyat:            safeNumber(raw.fiyat),
+      indirimFiyat:     raw.indirimFiyat ? safeNumber(raw.indirimFiyat) : null,
+      aciklama:         escapeHtml(raw.aciklama || ''),
+      gorselURL:        safeUrl(raw.gorselURL || ''),
+      renkler:          Array.isArray(raw.renkler) ? raw.renkler.map(safeColor) : [],
     };
   }
 
