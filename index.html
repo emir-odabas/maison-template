@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Maison — Kadın ve Erkek Giyim Butik">
+
+  <!-- Content Security Policy -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self';
+             script-src 'self' 'unsafe-inline' https://www.gstatic.com https://fonts.googleapis.com;
+             style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com;
+             font-src https://fonts.gstatic.com;
+             img-src 'self' data: https://firebasestorage.googleapis.com;
+             connect-src 'self' https://*.firebaseio.com https://*.googleapis.com https://firestore.googleapis.com;">
+
+  <title>Maison — Giyim Butik</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <!-- Announce Bar -->
+  <div class="announce" role="banner">
+    Ücretsiz kargo<span>·</span>1.500₺ ve üzeri siparişlerde<span>·</span>Türkiye geneli
+  </div>
+
+  <!-- Navigation -->
+  <nav role="navigation" aria-label="Ana menü">
+    <a href="#" class="nav-logo" aria-label="Maison Ana Sayfa">Maison</a>
+    <ul class="nav-links">
+      <li><a href="#kadin">Kadın</a></li>
+      <li><a href="#erkek">Erkek</a></li>
+      <li><a href="#">Koleksiyon</a></li>
+      <li><a href="#">Hakkımızda</a></li>
+      <li><a href="#">İletişim</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button type="button">Arama</button>
+      <button type="button">Hesabım</button>
+      <button type="button" class="cart-btn">Sepet (0)</button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" aria-label="Öne çıkan koleksiyon">
+    <div class="hero-left" aria-hidden="true">
+      <div class="hero-image-placeholder">
+        <div class="silhouette"></div>
+        <span class="hero-image-label">2025 İlkbahar-Yaz</span>
+      </div>
+    </div>
+    <div class="hero-right">
+      <p class="hero-season">Yeni Sezon · 2025 İlkbahar–Yaz</p>
+      <h1 class="hero-title">Sade<br><em>Zarafet</em></h1>
+      <p class="hero-subtitle">İki kimlik,<br>tek dil.</p>
+      <p class="hero-desc">
+        Her parça, giyene özgün bir dil konuşturur. Kadın ve erkek koleksiyonlarımız —
+        yalınlığı ve kalıcılığı merkeze alan bir estetik anlayışla tasarlandı.
+      </p>
+      <div class="hero-ctas">
+        <button type="button" class="btn-primary" onclick="scrollToSection('kadin')">Koleksiyonu Keşfet</button>
+        <button type="button" class="btn-secondary" onclick="scrollToSection('erkek')">Erkek Giyim</button>
+      </div>
+      <div class="hero-scroll" aria-hidden="true">
+        <div class="scroll-line"></div>
+        Aşağı kaydır
+      </div>
+    </div>
+  </section>
+
+  <!-- Gender Tabs -->
+  <div class="gender-nav" id="kadin" role="tablist" aria-label="Koleksiyon seçimi">
+    <button type="button" class="gender-tab active" role="tab" aria-selected="true"
+      onclick="switchGender(this,'kadin')">Kadın Koleksiyonu</button>
+    <button type="button" class="gender-tab" role="tab" aria-selected="false" onclick="switchGender(this,'erkek')">Erkek
+      Koleksiyonu</button>
+    <button type="button" class="gender-tab" role="tab" aria-selected="false" onclick="switchGender(this,'kadin')">Yeni
+      Gelenler</button>
+  </div>
+
+  <!-- Kadın Koleksiyonu -->
+  <section id="sec-kadin" aria-label="Kadın koleksiyonu">
+    <div class="section-header">
+      <div>
+        <p class="section-eyebrow">Kadın · 2025</p>
+        <h2 class="section-title">Öne Çıkan<br><em>Parçalar</em></h2>
+      </div>
+      <a href="#" class="section-link">Tümünü Gör</a>
+    </div>
+    <div class="products-grid" id="kadin-grid" role="list">
+      <div style="grid-column:span 4;padding:40px;color:var(--warm-gray);font-size:13px;text-align:center;">
+        Yükleniyor...
+      </div>
+    </div>
+  </section>
+
+  <!-- Dark Banner -->
+  <div class="banner" role="complementary" aria-label="Erkek koleksiyonu tanıtımı">
+    <div class="banner-text">
+      <p class="banner-eyebrow">Erkek Koleksiyonu · 2025</p>
+      <h2 class="banner-title">Zamanı<br>Aşan<br><em>Kesimler</em></h2>
+      <p class="banner-desc">
+        Klasiği yeniden yorumlayan; temiz çizgiler, nefes alan kumaşlar
+        ve dikkat çekmeyen bir özgünlük. Gündelik zarafet.
+      </p>
+      <button type="button" class="btn-light" onclick="switchToErkek()">Erkek Koleksiyonunu Keşfet</button>
+    </div>
+    <div class="banner-visual" aria-hidden="true">
+      <div class="bv-item bv-grad-1"><span class="bv-label">İlkbahar–Yaz 2025</span></div>
+      <div class="bv-item bv-grad-2"><span class="bv-label">Casual</span></div>
+      <div class="bv-item bv-grad-3"><span class="bv-label">Formal</span></div>
+    </div>
+  </div>
+
+  <!-- Erkek Koleksiyonu -->
+  <section id="sec-erkek" style="display:none" aria-label="Erkek koleksiyonu">
+    <div class="section-header" id="erkek">
+      <div>
+        <p class="section-eyebrow">Erkek · 2025</p>
+        <h2 class="section-title">Öne Çıkan<br><em>Parçalar</em></h2>
+      </div>
+      <a href="#" class="section-link">Tümünü Gör</a>
+    </div>
+    <div class="products-grid" id="erkek-grid" role="list">
+      <div style="grid-column:span 4;padding:40px;color:var(--warm-gray);font-size:13px;text-align:center;">
+        Yükleniyor...
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <div class="features" style="margin-top:1px;" role="list" aria-label="Hizmetlerimiz">
+    <div class="feature-item" role="listitem">
+      <div class="feature-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
+          <path d="M5 12H19M12 5l7 7-7 7" />
+        </svg>
+      </div>
+      <p class="feature-title">Ücretsiz Kargo</p>
+      <p class="feature-desc">1.500₺ üzeri tüm siparişlerde ücretsiz teslimat.</p>
+    </div>
+    <div class="feature-item" role="listitem">
+      <div class="feature-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
+          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+          <path d="M9 22V12h6v10" />
+        </svg>
+      </div>
+      <p class="feature-title">14 Gün İade</p>
+      <p class="feature-desc">Memnun kalmazsanız koşulsuz iade garantisi.</p>
+    </div>
+    <div class="feature-item" role="listitem">
+      <div class="feature-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
+          <rect x="1" y="4" width="22" height="16" rx="2" />
+          <path d="M1 10h22" />
+        </svg>
+      </div>
+      <p class="feature-title">Güvenli Ödeme</p>
+      <p class="feature-desc">iyzico ile 256-bit SSL şifreli güvenli alışveriş.</p>
+    </div>
+    <div class="feature-item" role="listitem">
+      <div class="feature-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
+          <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
+        </svg>
+      </div>
+      <p class="feature-title">7/24 Destek</p>
+      <p class="feature-desc">WhatsApp veya e-posta ile her zaman yanınızdayız.</p>
+    </div>
+  </div>
+
+  <!-- Newsletter -->
+  <div class="newsletter">
+    <p class="newsletter-eyebrow">Bülten</p>
+    <h2 class="newsletter-title">Yeni Koleksiyonlardan<br><em>İlk Haberdar Ol</em></h2>
+    <p class="newsletter-desc">Özel indirimler, yeni sezon önizlemeleri ve stil önerileri için kaydol.</p>
+    <div class="newsletter-form" role="form" aria-label="Bülten kaydı">
+      <input type="email" placeholder="E-posta adresin" aria-label="E-posta adresi" autocomplete="email">
+      <button type="button">Kaydol</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer role="contentinfo">
+    <div class="footer-top">
+      <div>
+        <p class="footer-brand-name">MAISON</p>
+        <p class="footer-brand-desc">Kalıcı tasarım, nefes alan kumaşlar. Kadın ve erkek için sade zarafet.</p>
+      </div>
+      <div>
+        <p class="footer-col-title">Alışveriş</p>
+        <ul class="footer-links">
+          <li><a href="#">Kadın Koleksiyonu</a></li>
+          <li><a href="#">Erkek Koleksiyonu</a></li>
+          <li><a href="#">Yeni Gelenler</a></li>
+          <li><a href="#">İndirim</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Kurumsal</p>
+        <ul class="footer-links">
+          <li><a href="#">Hakkımızda</a></li>
+          <li><a href="#">Sürdürülebilirlik</a></li>
+          <li><a href="#">Kariyer</a></li>
+          <li><a href="#">Basın</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Yardım</p>
+        <ul class="footer-links">
+          <li><a href="#">Kargo & İade</a></li>
+          <li><a href="#">Beden Rehberi</a></li>
+          <li><a href="#">KVKK & Gizlilik</a></li>
+          <li><a href="#">İletişim</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Maison. Tüm hakları saklıdır.</p>
+      <nav class="footer-social" aria-label="Sosyal medya">
+        <a href="#" rel="noopener noreferrer" target="_blank">Instagram</a>
+        <a href="#" rel="noopener noreferrer" target="_blank">Pinterest</a>
+        <a href="#" rel="noopener noreferrer" target="_blank">TikTok</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+
+  <!-- App scripts — sıra önemli -->
+  <script src="js/config.js"></script>
+  <script src="js/sanitize.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/products.js"></script>
+
+</body>
+
+</html>
