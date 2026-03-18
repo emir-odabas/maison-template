@@ -25,7 +25,7 @@
     try {
       const snapshot = await db
         .collection('urunler')
-        .where('durum', '==', 'aktif')
+
         .orderBy('olusturma', 'desc')
         .get();
 
